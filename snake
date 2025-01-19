@@ -1,0 +1,75 @@
+#include <iostream>
+#include <conio.h>
+#include <windows.h>
+#include <vector>
+
+using namespace std;
+
+int main() {
+    vector <vector <int>> snakeElements;
+    int screenX = 40, screenY = 40;
+    int x = 10, y = 10, foodX = 5, foodY = 5, score = 0;
+    char direction = 'd';
+
+    while (true) {
+        system("cls");
+        for (int i = 0; i < screenX; ++i) {
+            for (int j = 0; j < screenY; ++j) {
+                if (i == 0 || i ==(screenX - 1) || j == 0 || j == (screenY-1)) {
+                    cout << "#"; 
+                }
+                else if (i == y && j == x) {
+                    cout << "O";
+                }
+                else if (i == foodY && j == foodX) {
+                    cout <<"*";
+                }
+                else {
+                    cout << " ";
+                }
+            }
+            cout << endl;
+        }
+
+        cout << "your score: " << score << endl;
+        if (_kbhit()) {
+            char ch = _getch();
+            if (ch == 'w') direction = 'w';
+            if (ch == 's') direction = 's';
+            if (ch == 'a') direction = 'a';
+            if (ch == 'd') direction = 'd';
+        }
+
+        if (direction == 'w') 
+        {
+            --y;
+        }
+        if (direction == 's')
+        {
+            ++y;
+        }
+        if (direction == 'a') 
+        {
+            --x;
+        }
+        if (direction == 'd') {
+            ++x;
+        }
+
+        if (x == foodX && y == foodY) {
+            score++;
+            foodX = rand() % (screenX-1) + 1;
+            foodY = rand() % (screenY-1) + 1;
+        }
+
+        if (x == 0 || x == screenX-1 || y == 0 || y == screenY - 1)
+        {
+            break;
+        }
+
+        Sleep(100);
+    }
+    cout << "game over!" << endl;
+    system("pause");
+    return 0;
+}
